@@ -1,0 +1,24 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: BridgeHelper
+    network: bsc
+    source:
+      address: "0x2353Dcda746fa1AAD17C5650Ddf2A20112862197"
+      abi: BridgeHelper
+      startBlock: 11559625
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - PublicKey
+      abis:
+        - name: BridgeHelper
+          file: ./abis/BridgeHelper.json
+      eventHandlers:
+        - event: PublicKey(indexed address,bytes)
+          handler: handlePublicKey
+      file: ./src/mapping.ts
