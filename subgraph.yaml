@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: BridgeHelper
-    network: bsc
+    network: mainnet
     source:
-      address: "0xFA00619d8a9fAa01476fF8A9ddCE0e5a4362CF02"
+      address: "0xc8162B135cED80a6b8Aa457EC1ef7f030DE87379"
       abi: BridgeHelper
-      startBlock: 11932029
+      startBlock: 13494216
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
