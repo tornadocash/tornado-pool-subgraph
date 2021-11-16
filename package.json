@@ -4,10 +4,8 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ tornadocash/tornado-pool-subgraph",
-    "create-local": "graph create --node http://localhost:8020/ tornadocash/tornado-pool-subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ tornadocash/tornado-pool-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 tornadocash/tornado-pool-subgraph"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --access-token $TOKEN",
+    "deploy:mainnet": "yarn deploy -- tornadocash/mainnet-tornado-pool-subgraph"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.22.3",

@@ -6,9 +6,9 @@ dataSources:
     name: BridgeHelper
     network: mainnet
     source:
-      address: "0x066D6E8a8968Ab721ee2307acf4cCd2ab6aE6EB0"
+      address: "0x59c13355ae7b74F51313f2bfF1aFD86E1FFEbefA"
       abi: BridgeHelper
-      startBlock: 13551232
+      startBlock: 13590277
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
