@@ -1,0 +1,630 @@
+[
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_verifier2",
+        "internalType": "contract IVerifier"
+      },
+      {
+        "type": "address",
+        "name": "_verifier16",
+        "internalType": "contract IVerifier"
+      },
+      { "type": "uint32", "name": "_levels", "internalType": "uint32" },
+      { "type": "address", "name": "_hasher", "internalType": "address" },
+      {
+        "type": "address",
+        "name": "_token",
+        "internalType": "contract IERC6777"
+      },
+      { "type": "address", "name": "_omniBridge", "internalType": "address" },
+      { "type": "address", "name": "_l1Unwrapper", "internalType": "address" },
+      { "type": "address", "name": "_governance", "internalType": "address" },
+      { "type": "uint256", "name": "_l1ChainId", "internalType": "uint256" },
+      { "type": "address", "name": "_multisig", "internalType": "address" }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "NewCommitment",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "commitment",
+        "internalType": "bytes32",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "index",
+        "internalType": "uint256",
+        "indexed": false
+      },
+      {
+        "type": "bytes",
+        "name": "encryptedOutput",
+        "internalType": "bytes",
+        "indexed": false
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "NewNullifier",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "nullifier",
+        "internalType": "bytes32",
+        "indexed": false
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "PublicKey",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "internalType": "address",
+        "indexed": true
+      },
+      {
+        "type": "bytes",
+        "name": "key",
+        "internalType": "bytes",
+        "indexed": false
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "FIELD_SIZE",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "int256", "name": "", "internalType": "int256" }],
+    "name": "MAX_EXT_AMOUNT",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "MAX_FEE",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "MIN_EXT_AMOUNT_LIMIT",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint32", "name": "", "internalType": "uint32" }],
+    "name": "ROOT_HISTORY_SIZE",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "ZERO_VALUE",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "__gap",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      { "type": "address", "name": "", "internalType": "contract IAMB" }
+    ],
+    "name": "ambBridge",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "pure",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "calculatePublicAmount",
+    "inputs": [
+      { "type": "int256", "name": "_extAmount", "internalType": "int256" },
+      { "type": "uint256", "name": "_fee", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "configureLimits",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_maximumDepositAmount",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint32", "name": "", "internalType": "uint32" }],
+    "name": "currentRootIndex",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }],
+    "name": "filledSubtrees",
+    "inputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }],
+    "name": "getLastRoot",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }],
+    "name": "hashLeftRight",
+    "inputs": [
+      { "type": "bytes32", "name": "_left", "internalType": "bytes32" },
+      { "type": "bytes32", "name": "_right", "internalType": "bytes32" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      { "type": "address", "name": "", "internalType": "contract IHasher" }
+    ],
+    "name": "hasher",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "initialize",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_maximumDepositAmount",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [{ "type": "bool", "name": "", "internalType": "bool" }],
+    "name": "isCalledByOwner",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bool", "name": "", "internalType": "bool" }],
+    "name": "isKnownRoot",
+    "inputs": [
+      { "type": "bytes32", "name": "_root", "internalType": "bytes32" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bool", "name": "", "internalType": "bool" }],
+    "name": "isSpent",
+    "inputs": [
+      { "type": "bytes32", "name": "_nullifierHash", "internalType": "bytes32" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "address" }],
+    "name": "l1Unwrapper",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "lastBalance",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint32", "name": "", "internalType": "uint32" }],
+    "name": "levels",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "maximumDepositAmount",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "address" }],
+    "name": "multisig",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint32", "name": "", "internalType": "uint32" }],
+    "name": "nextIndex",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bool", "name": "", "internalType": "bool" }],
+    "name": "nullifierHashes",
+    "inputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "address" }],
+    "name": "omniBridge",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "onTokenBridged",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token",
+        "internalType": "contract IERC6777"
+      },
+      { "type": "uint256", "name": "_amount", "internalType": "uint256" },
+      { "type": "bytes", "name": "_data", "internalType": "bytes" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "onTransact",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_args",
+        "internalType": "struct TornadoPool.Proof",
+        "components": [
+          { "type": "bytes", "name": "proof", "internalType": "bytes" },
+          { "type": "bytes32", "name": "root", "internalType": "bytes32" },
+          {
+            "type": "bytes32[]",
+            "name": "inputNullifiers",
+            "internalType": "bytes32[]"
+          },
+          {
+            "type": "bytes32[2]",
+            "name": "outputCommitments",
+            "internalType": "bytes32[2]"
+          },
+          {
+            "type": "uint256",
+            "name": "publicAmount",
+            "internalType": "uint256"
+          },
+          {
+            "type": "bytes32",
+            "name": "extDataHash",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "_extData",
+        "internalType": "struct TornadoPool.ExtData",
+        "components": [
+          { "type": "address", "name": "recipient", "internalType": "address" },
+          { "type": "int256", "name": "extAmount", "internalType": "int256" },
+          { "type": "address", "name": "relayer", "internalType": "address" },
+          { "type": "uint256", "name": "fee", "internalType": "uint256" },
+          {
+            "type": "bytes",
+            "name": "encryptedOutput1",
+            "internalType": "bytes"
+          },
+          {
+            "type": "bytes",
+            "name": "encryptedOutput2",
+            "internalType": "bytes"
+          },
+          { "type": "bool", "name": "isL1Withdrawal", "internalType": "bool" },
+          { "type": "uint256", "name": "l1Fee", "internalType": "uint256" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "address" }],
+    "name": "owner",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }],
+    "name": "ownerChainId",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "register",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_account",
+        "internalType": "struct TornadoPool.Account",
+        "components": [
+          { "type": "address", "name": "owner", "internalType": "address" },
+          { "type": "bytes", "name": "publicKey", "internalType": "bytes" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "registerAndTransact",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_account",
+        "internalType": "struct TornadoPool.Account",
+        "components": [
+          { "type": "address", "name": "owner", "internalType": "address" },
+          { "type": "bytes", "name": "publicKey", "internalType": "bytes" }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "_proofArgs",
+        "internalType": "struct TornadoPool.Proof",
+        "components": [
+          { "type": "bytes", "name": "proof", "internalType": "bytes" },
+          { "type": "bytes32", "name": "root", "internalType": "bytes32" },
+          {
+            "type": "bytes32[]",
+            "name": "inputNullifiers",
+            "internalType": "bytes32[]"
+          },
+          {
+            "type": "bytes32[2]",
+            "name": "outputCommitments",
+            "internalType": "bytes32[2]"
+          },
+          {
+            "type": "uint256",
+            "name": "publicAmount",
+            "internalType": "uint256"
+          },
+          {
+            "type": "bytes32",
+            "name": "extDataHash",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "_extData",
+        "internalType": "struct TornadoPool.ExtData",
+        "components": [
+          { "type": "address", "name": "recipient", "internalType": "address" },
+          { "type": "int256", "name": "extAmount", "internalType": "int256" },
+          { "type": "address", "name": "relayer", "internalType": "address" },
+          { "type": "uint256", "name": "fee", "internalType": "uint256" },
+          {
+            "type": "bytes",
+            "name": "encryptedOutput1",
+            "internalType": "bytes"
+          },
+          {
+            "type": "bytes",
+            "name": "encryptedOutput2",
+            "internalType": "bytes"
+          },
+          { "type": "bool", "name": "isL1Withdrawal", "internalType": "bool" },
+          { "type": "uint256", "name": "l1Fee", "internalType": "uint256" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "rescueTokens",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token",
+        "internalType": "contract IERC6777"
+      },
+      { "type": "address", "name": "_to", "internalType": "address payable" },
+      { "type": "uint256", "name": "_balance", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }],
+    "name": "roots",
+    "inputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      { "type": "address", "name": "", "internalType": "contract IERC6777" }
+    ],
+    "name": "token",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "transact",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_args",
+        "internalType": "struct TornadoPool.Proof",
+        "components": [
+          { "type": "bytes", "name": "proof", "internalType": "bytes" },
+          { "type": "bytes32", "name": "root", "internalType": "bytes32" },
+          {
+            "type": "bytes32[]",
+            "name": "inputNullifiers",
+            "internalType": "bytes32[]"
+          },
+          {
+            "type": "bytes32[2]",
+            "name": "outputCommitments",
+            "internalType": "bytes32[2]"
+          },
+          {
+            "type": "uint256",
+            "name": "publicAmount",
+            "internalType": "uint256"
+          },
+          {
+            "type": "bytes32",
+            "name": "extDataHash",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "_extData",
+        "internalType": "struct TornadoPool.ExtData",
+        "components": [
+          { "type": "address", "name": "recipient", "internalType": "address" },
+          { "type": "int256", "name": "extAmount", "internalType": "int256" },
+          { "type": "address", "name": "relayer", "internalType": "address" },
+          { "type": "uint256", "name": "fee", "internalType": "uint256" },
+          {
+            "type": "bytes",
+            "name": "encryptedOutput1",
+            "internalType": "bytes"
+          },
+          {
+            "type": "bytes",
+            "name": "encryptedOutput2",
+            "internalType": "bytes"
+          },
+          { "type": "bool", "name": "isL1Withdrawal", "internalType": "bool" },
+          { "type": "uint256", "name": "l1Fee", "internalType": "uint256" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      { "type": "address", "name": "", "internalType": "contract IVerifier" }
+    ],
+    "name": "verifier16",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      { "type": "address", "name": "", "internalType": "contract IVerifier" }
+    ],
+    "name": "verifier2",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bool", "name": "", "internalType": "bool" }],
+    "name": "verifyProof",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_args",
+        "internalType": "struct TornadoPool.Proof",
+        "components": [
+          { "type": "bytes", "name": "proof", "internalType": "bytes" },
+          { "type": "bytes32", "name": "root", "internalType": "bytes32" },
+          {
+            "type": "bytes32[]",
+            "name": "inputNullifiers",
+            "internalType": "bytes32[]"
+          },
+          {
+            "type": "bytes32[2]",
+            "name": "outputCommitments",
+            "internalType": "bytes32[2]"
+          },
+          {
+            "type": "uint256",
+            "name": "publicAmount",
+            "internalType": "uint256"
+          },
+          {
+            "type": "bytes32",
+            "name": "extDataHash",
+            "internalType": "bytes32"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "pure",
+    "outputs": [{ "type": "bytes32", "name": "", "internalType": "bytes32" }],
+    "name": "zeros",
+    "inputs": [{ "type": "uint256", "name": "i", "internalType": "uint256" }]
+  }
+]

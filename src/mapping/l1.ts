@@ -1,5 +1,5 @@
-import { Account } from "../generated/schema";
-import { PublicKey } from "../generated/BridgeHelper/BridgeHelper";
+import { Account } from "../../generated/schema";
+import { PublicKey } from "../../generated/BridgeHelper/BridgeHelper";
 
 export function handlePublicKey(event: PublicKey): void {
   let entity = new Account(
