@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: ../schema/l1.graphql
 dataSources:
   - kind: ethereum/contract
     name: BridgeHelper
@@ -17,8 +17,8 @@ dataSources:
         - PublicKey
       abis:
         - name: BridgeHelper
-          file: ./abis/BridgeHelper.json
+          file: ../abis/BridgeHelper.json
       eventHandlers:
         - event: PublicKey(indexed address,bytes)
           handler: handlePublicKey
-      file: ./src/mapping.ts
+      file: ../src/mapping/l1.ts

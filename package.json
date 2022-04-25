@@ -4,11 +4,14 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
+    "generate:l1": "yarn codegen subgraph/l1.yaml && yarn build subgraph/l1.yaml",
+    "generate:l2": "yarn codegen subgraph/l2.yaml && yarn build subgraph/l2.yaml",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --access-token $TOKEN",
-    "deploy:mainnet": "yarn deploy -- tornadocash/mainnet-tornado-pool-subgraph"
+    "deploy:l1": "yarn deploy tornadocash/mainnet-tornado-pool-subgraph subgraph/l1.yaml",
+    "deploy:l2": "yarn deploy tornadocash/gnosis-tornado-nova-subgraph subgraph/l2.yaml"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.22.3",
-    "@graphprotocol/graph-ts": "0.22.1"
+    "@graphprotocol/graph-cli": "0.27.0",
+    "@graphprotocol/graph-ts": "0.24.1"
   }
 }

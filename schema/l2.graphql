@@ -1,0 +1,15 @@
+type Commitment @entity {
+  id: ID!
+  index: BigInt!
+  commitment: Bytes!
+  blockNumber: BigInt!
+  encryptedOutput: Bytes!
+  transactionHash: Bytes!
+}
+
+type Nullifier @entity {
+  id: ID!
+  nullifier: Bytes!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}

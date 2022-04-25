@@ -1,0 +1,27 @@
+specVersion: 0.0.2
+schema:
+  file: ../schema/l2.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: TornadoPool
+    network: xdai
+    source:
+      address: "0xD692Fd2D0b2Fbd2e52CFa5B5b9424bC981C30696"
+      abi: TornadoPool
+      startBlock: 19489891
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Commitment
+        - Nullifier
+      abis:
+        - name: TornadoPool
+          file: ../abis/TornadoPool.json
+      eventHandlers:
+        - event: NewCommitment(bytes32,uint256,bytes)
+          handler: handleCommitment
+        - event: NewNullifier(bytes32)
+          handler: handleNullifier
+      file: ../src/mapping/l2.ts
