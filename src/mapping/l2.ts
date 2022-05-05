@@ -6,7 +6,7 @@ import {
 
 export function handleCommitment(event: NewCommitment): void {
   let entity = new Commitment(
-    event.transaction.from.toHex() + "-" + event.logIndex.toString()
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
 
   entity.index = event.params.index;
@@ -21,7 +21,7 @@ export function handleCommitment(event: NewCommitment): void {
 
 export function handleNullifier(event: NewNullifier): void {
   let entity = new Nullifier(
-    event.transaction.from.toHex() + "-" + event.logIndex.toString()
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
 
   entity.nullifier = event.params.nullifier;
